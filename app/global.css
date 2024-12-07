@@ -16,7 +16,7 @@
   --sh-property: #e25a1c;
   --sh-entity: #e25a1c;
 }
-
+ 
 @media (prefers-color-scheme: dark) {
   :root {
     --sh-class: #4c97f8;
@@ -99,7 +99,7 @@ html {
 }
 
 .prose h4 {
-  @apply text-lg font-medium tracking-tight mt-6 mb-2;
+  @apply text-lg font-medium tracking-tight mt-6 mb-2 text-wrap;
 }
 
 .prose strong {
