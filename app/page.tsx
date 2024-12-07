@@ -12,7 +12,7 @@ export default function Page() {
       <div className="my-8">
         <div className="font-bold text-lg pb-4">📔 最近笔记</div>
         <BlogPosts />
-        <div className="font-bold text-lg pb-2 pt-6">📋 最近想法</div>
+        <div className="font-bold text-lg pb-2 pt-6">📋 最近动态</div>
         <Record />
       </div>
     </section>
