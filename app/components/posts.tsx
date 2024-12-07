@@ -21,7 +21,7 @@ export function BlogPosts({ count = 9 }) {
             href={`/blog/${post.slug}`}
           >
             <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2">
-              <p className="text-neutral-900 underline decoration-gray-800 dark:text-neutral-100 tracking-tight">
+              <p className="text-neutral-900 underline dark:text-neutral-100 tracking-tight">
                 {post.metadata.title}
               </p>
             </div>
