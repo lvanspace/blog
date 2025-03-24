@@ -21,6 +21,7 @@ export default function Footer() {
       <p className="mt-8 text-neutral-600 dark:text-neutral-300">
         2017 - 2024
       </p>
+      <div className="mt-4 text-sm text-gray-700">皖ICP备17003895号-1</div>
     </footer>
   )
 }
