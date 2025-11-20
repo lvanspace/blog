@@ -31,6 +31,8 @@
 
 html {
   min-width: 360px;
+  overflow-x: hidden;
+  word-wrap: break-word
 }
 
 .prose .anchor {
