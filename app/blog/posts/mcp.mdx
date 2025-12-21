@@ -1,0 +1,139 @@
+---
+title: 'MCP学习'
+publishedAt: '2025-11-21'
+tags: ['技术']
+draft: false
+summary: '21'
+---
+
+# MCP 学习
+
+## 什么是MCP？
+
+首先我们先明白，在没有MCP之前，我们想结合LLM和自己的知识进行回答，一般是通过 FunctionCall 或者代码层 if else，亦或者是插件、LangChain等。
+
+在这里不是说这些解决方案不够好，而是相比 MCP 他们越来越定制化且不可拆分。这样一来、其他的 LLM客户端想调取你的能力就非常难。
+
+所以 MCP 的出现是将能力进行模块化，给模型调用。
+
+MCP 是 C/S 架构。可以理解为 Client 端会结合AI 应用决定和调取哪些 MCP Server。
+
+此篇我们只开发 Server 服务。
+
+MCP Server 和 Client 的通信可以是，本地命令行Stdio（比如可以让 LLM 获取你本地文件夹，文件内容等等），Http（可以让 LLM 通过 API 获取天气等）。
+
+通过 JSON 形式（JSON-RPC）进行数据传输约定。
+
+从最简单的 Demo 开始。
+
+## 让Cursor获取我本地的文本内容
+
+```jsx
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+
+import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+
+import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+
+import http from 'http';
+
+import fs from 'fs';
+
+import path from 'path';
+
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+// 创建 MCP 服务器
+
+const server = new Server(
+
+{ name: 'memo-server', version: '1.0.0' },
+
+{ capabilities: { tools: {} } }
+
+);
+
+// 注册工具
+
+server.setRequestHandler(ListToolsRequestSchema, () => ({
+
+tools: [{
+
+name: 'get_memo',
+
+description: '获取备忘录',
+
+inputSchema: { type: 'object', properties: {}, required: [] }
+
+}]
+
+}));
+
+server.setRequestHandler(CallToolRequestSchema, (request) => {
+
+if (request.params.name === 'get_memo') {
+
+const content = fs.readFileSync(path.join(__dirname, 'test.txt'), 'utf8').trim();
+
+return { content: [{ type: 'text', text: content || '无内容' }] };
+
+}
+
+return { content: [{ type: 'text', text: '未知工具' }], isError: true };
+
+});
+
+// 存储连接
+
+const transports = new Map();
+
+// HTTP 服务器
+
+http.createServer(async (req, res) => {
+
+const url = new URL(req.url, `http://${req.headers.host}`);
+
+// SSE 连接
+
+if (url.pathname === '/sse') {
+
+const transport = new SSEServerTransport('/msg', res);
+
+transports.set(transport.sessionId, transport);
+
+await server.connect(transport);
+
+console.log(`连接: ${transport.sessionId}`);
+
+}
+
+// 消息处理
+
+else if (url.pathname === '/msg') {
+
+const sessionId = url.searchParams.get('sessionId');
+
+const transport = transports.get(sessionId);
+
+if (transport) {
+
+await transport.handlePostMessage(req, res);
+
+} else {
+
+res.writeHead(400).end('无效会话');
+
+}
+
+}
+
+}).listen(3000, () => console.log('MCP 服务器运行在 3000 端口'));
+```
+
+延展阅读
+
+https://modelcontextprotocol.io/docs/develop/build-server
