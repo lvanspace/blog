@@ -18,7 +18,7 @@ MCP 是 C/S 架构。可以理解为 Client 端会结合AI 应用决定和调取
 
 此篇我们只开发 Server 服务。
 
-MCP Server 和 Client 的通信可以是，本地命令行Stdio（比如可以让 LLM 获取你本地文件夹，文件内容等等），Http（可以让 LLM 通过 API 获取天气等）。
+MCP Server 和 Client 的通信可以是，本地Stdio，Http，也就是说 MCP Server可以是本地的、也可以是远程的。
 
 通过 JSON 形式（JSON-RPC）进行数据传输约定。
 
