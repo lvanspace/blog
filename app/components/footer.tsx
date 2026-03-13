@@ -18,10 +18,7 @@ function ArrowIcon() {
 export default function Footer() {
   return (
     <footer className="mb-16">
-      <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-      @CopyRight {new Date().getFullYear()}
-      </p>
-      <div className="mt-4 text-sm text-gray-700">皖ICP备17003895号-1</div>
+      <div className="mt-4 text-sm text-gray-700">皖ICP备17003895号-1&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;©CopyRight liyunote.com</div>
     </footer>
   )
 }
