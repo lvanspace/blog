@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 
-export function BlogPosts({ count = 9 }) {
+export function BlogPosts({ count = 100 }) {
   let allBlogs = getBlogPosts()
   return (
     <div>
@@ -22,7 +22,7 @@ export function BlogPosts({ count = 9 }) {
           >
             <div className="w-full flex flex-col md:flex-row space-x-0 md:space-x-2 justify-between">
 
-              <p className="text-neutral-900 underline dark:text-neutral-100 tracking-tight">
+              <p className="text-neutral-900 dark:text-neutral-100 tracking-tight">
                 {post.metadata.title}
               </p>
 
@@ -34,7 +34,7 @@ export function BlogPosts({ count = 9 }) {
 
         ))
       }
-      {count === 9 && <Link className='mt-2' href={'/blog/'}> 📎 点击查看所有笔记</Link>}
+      {/* {count === 9 && <Link className='mt-2' href={'/blog/'}> 📎 点击查看所有笔记</Link>} */}
     </div>
   )
 }
