@@ -1,8 +1,26 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { highlight } from 'sugar-high'
 import React from 'react'
+import CopyButton from './copy-button'
+import { codeToHtml } from 'shiki'
+
+const normalizeLang = (lang?: string) => {
+  const lower = (lang || 'text').toString().toLowerCase()
+  if (['js', 'jsx'].includes(lower)) return 'javascript'
+  if (['ts', 'tsx'].includes(lower)) return 'typescript'
+  if (['shell', 'sh', 'bash'].includes(lower)) return 'bash'
+  if (['yml'].includes(lower)) return 'yaml'
+  return lower
+}
+
+const escapeHtml = (str: string) =>
+  str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -48,9 +66,47 @@ function RoundedImage(props) {
   return <Image alt={props.alt} width="600" height="0" className="rounded-lg mx-auto! my-8!" {...props} />
 }
 
-function Code({ children, ...props }) {
-  let codeHTML = highlight(children)
-  return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
+async function Pre({ children, ...props }) {
+  const code = React.Children.toArray(children)[0] as any
+  const raw =
+    code?.props?.__rawString__ ||
+    (Array.isArray(code?.props?.children)
+      ? code.props.children.join('')
+      : code?.props?.children || '')
+  const lang =
+    code?.props?.['data-language'] ||
+    code?.props?.className?.replace('language-', '') ||
+    'text'
+
+  const normalizedLang = normalizeLang(lang)
+
+  let html: string
+  try {
+    html = await codeToHtml(raw, {
+      lang: normalizedLang,
+      themes: {
+        light: 'github-light-default',
+        dark: 'github-dark-default',
+      },
+    })
+  } catch (err) {
+    html = `<pre><code>${escapeHtml(raw)}</code></pre>`
+    console.error('Code highlight failed', err)
+  }
+
+  return (
+    <div className="code-block group">
+      <div className="code-block__top">
+        <span className="code-block__lang">{normalizedLang.toUpperCase()}</span>
+        <CopyButton value={raw} />
+      </div>
+      <div
+        className="shiki-wrapper"
+        dangerouslySetInnerHTML={{ __html: html }}
+        {...props}
+      />
+    </div>
+  )
 }
 
 function slugify(str) {
@@ -95,7 +151,7 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
-  code: Code,
+  pre: Pre,
   Table,
 }
 

@@ -34,7 +34,7 @@ export function BlogPosts({ count = 100 }) {
 
         ))
       }
-      {count === 9 && <Link className='mt-2' href={'/blog/'}> 📎 点击查看所有笔记</Link>}
+      {/* {count === 9 && <Link className='mt-2' href={'/blog/'}> 📎 点击查看所有笔记</Link>} */}
     </div>
   )
 }

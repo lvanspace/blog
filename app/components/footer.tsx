@@ -18,7 +18,7 @@ function ArrowIcon() {
 export default function Footer() {
   return (
     <footer className="mb-16">
-      <div className="mt-4 text-sm text-gray-700">皖ICP备17003895号-1&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;©CopyRight liyunote.com</div>
+      <div className="mt-4 text-sm text-gray-700">皖ICP备17003895号-1 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;©2026 liyunote.com</div>
     </footer>
   )
 }

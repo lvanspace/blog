@@ -62,21 +62,63 @@ html {
 }
 
 .prose pre {
-  @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
+  @apply rounded-xl overflow-x-auto border border-neutral-200/80 dark:border-neutral-800/80 py-3 px-4 text-sm shadow-sm;
+  background: linear-gradient(180deg, rgba(247, 249, 252, 0.9), rgba(240, 243, 247, 0.9));
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose pre {
+    background: linear-gradient(180deg, rgba(22, 27, 36, 0.9), rgba(12, 16, 24, 0.92));
+    color: #e5e7eb;
+  }
 }
 
 .prose code {
-  @apply px-1 py-0.5 rounded-lg;
+  @apply px-1.5 py-0.5 rounded-md bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 border border-neutral-200/70 dark:border-neutral-800/70;
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
 }
 
 .prose pre code {
-  @apply p-0;
-  border: initial;
-  line-height: 1.5;
+  @apply p-0 bg-transparent border-0;
+  line-height: 1.6;
+  display: block;
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+}
+
+.code-block {
+  @apply relative my-6 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-transparent;
+}
+
+.code-block__top {
+  @apply flex items-center justify-between px-4 py-2 text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 border-b border-neutral-200/70 dark:border-neutral-800/70 bg-white/70 dark:bg-neutral-900/60 rounded-t-xl backdrop-blur;
+}
+
+.code-block__lang {
+  @apply font-medium;
+}
+
+.code-block__copy {
+  @apply text-xs px-3 py-1 rounded-md border border-neutral-200/70 dark:border-neutral-700/70 bg-neutral-50/90 dark:bg-neutral-800/70 text-neutral-600 dark:text-neutral-200 transition;
+}
+
+.code-block__copy:hover {
+  @apply border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700;
 }
 
 .prose code span {
   @apply font-medium;
+}
+
+.code-block pre {
+  @apply rounded-b-xl overflow-x-auto text-sm p-4 m-0 border-t border-neutral-200/70 dark:border-neutral-800/70;
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+
+.code-block code {
+  @apply block;
 }
 
 .prose img {
