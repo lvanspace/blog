@@ -38,6 +38,15 @@ export const metadata: Metadata = {
 
 const cx = (...classes) => classes.filter(Boolean).join(' ')
 
+const themeScript = `
+(() => {
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  const apply = () => document.documentElement.classList.toggle('dark', mq.matches);
+  apply();
+  mq.addEventListener('change', apply);
+})();
+`
+
 export default function RootLayout({
   children,
 }: {
@@ -53,6 +62,10 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased mx-auto mt-8 w-full max-w-[645px] px-4 sm:px-6 lg:px-8">
+        <script
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+          suppressHydrationWarning
+        />
         <main className="flex-auto min-w-0 mt-6 flex flex-col w-full">
           <Navbar />
           {children}

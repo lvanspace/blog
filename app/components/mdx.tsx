@@ -80,17 +80,24 @@ async function Pre({ children, ...props }) {
 
   const normalizedLang = normalizeLang(lang)
 
-  let html: string
+  const tagWithTheme = (html: string, theme: 'light' | 'dark') =>
+    html.replace('<pre class="', `<pre data-theme="${theme}" class="`)
+
+  let htmlLight: string
+  let htmlDark: string
   try {
-    html = await codeToHtml(raw, {
+    htmlLight = await codeToHtml(raw, {
       lang: normalizedLang,
-      themes: {
-        light: 'github-light-default',
-        dark: 'github-dark-default',
-      },
+      theme: 'github-light-default',
+    })
+    htmlDark = await codeToHtml(raw, {
+      lang: normalizedLang,
+      theme: 'github-dark-default',
     })
   } catch (err) {
-    html = `<pre><code>${escapeHtml(raw)}</code></pre>`
+    const fallback = `<pre><code>${escapeHtml(raw)}</code></pre>`
+    htmlLight = fallback
+    htmlDark = fallback
     console.error('Code highlight failed', err)
   }
 
@@ -101,8 +108,11 @@ async function Pre({ children, ...props }) {
         <CopyButton value={raw} />
       </div>
       <div
-        className="shiki-wrapper"
-        dangerouslySetInnerHTML={{ __html: html }}
+        className="code-block__body"
+        dangerouslySetInnerHTML={{
+          __html:
+            tagWithTheme(htmlLight, 'light') + tagWithTheme(htmlDark, 'dark'),
+        }}
         {...props}
       />
     </div>

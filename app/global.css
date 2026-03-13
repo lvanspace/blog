@@ -32,7 +32,21 @@
 html {
   min-width: 360px;
   overflow-x: hidden;
-  word-wrap: break-word
+  word-wrap: break-word;
+  color-scheme: light;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  transition: background-color 150ms ease, color 150ms ease;
+  font-family: var(--font-geist-sans), 'SF Pro SC', 'PingFang SC', 'Noto Sans SC',
+    'Microsoft YaHei', 'Hiragino Sans GB', 'Source Han Sans SC', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .prose .anchor {
@@ -91,6 +105,39 @@ html {
   @apply relative my-6 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-transparent;
 }
 
+.code-block__body pre {
+  @apply rounded-b-xl overflow-x-auto text-sm p-4 m-0 border-t border-neutral-200/70 dark:border-neutral-800/70;
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+
+.code-block__body code {
+  @apply block;
+}
+
+.code-block__body pre[data-theme='dark'] {
+  display: none;
+}
+
+.code-block__body pre[data-theme='light'] {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000;
+    color: #e5e7eb;
+  }
+
+  .code-block__body pre[data-theme='light'] {
+    display: none;
+  }
+
+  .code-block__body pre[data-theme='dark'] {
+    display: block;
+  }
+}
+
 .code-block__top {
   @apply flex items-center justify-between px-4 py-2 text-xs uppercase tracking-wide text-neutral-500 dark:text-neutral-400 border-b border-neutral-200/70 dark:border-neutral-800/70 bg-white/70 dark:bg-neutral-900/60 rounded-t-xl backdrop-blur;
 }
@@ -111,16 +158,6 @@ html {
   @apply font-medium;
 }
 
-.code-block pre {
-  @apply rounded-b-xl overflow-x-auto text-sm p-4 m-0 border-t border-neutral-200/70 dark:border-neutral-800/70;
-  tab-size: 2;
-  -moz-tab-size: 2;
-}
-
-.code-block code {
-  @apply block;
-}
-
 .prose img {
   /* Don't apply styles to next/image */
   @apply m-0;
@@ -128,18 +165,23 @@ html {
 
 .prose p {
   @apply my-4 text-neutral-800 dark:text-neutral-200;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
 }
 
 .prose h1 {
   @apply text-4xl font-medium tracking-tight mt-6 mb-2;
+  letter-spacing: -0.01em;
 }
 
 .prose h2 {
   @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  letter-spacing: -0.005em;
 }
 
 .prose h3 {
   @apply text-xl font-medium tracking-tight mt-6 mb-2;
+  letter-spacing: -0.005em;
 }
 
 .prose h4 {
