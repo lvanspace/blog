@@ -12,16 +12,27 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
     default: '李宇博客',
-    template: '%s | Next.js Portfolio Starter',
+    template: '%s | 李宇博客',
   },
-  description: '',
+  description: '李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。',
+  alternates: {
+    canonical: baseUrl,
+  },
+  authors: [{ name: '李宇' }],
   openGraph: {
-    title: '',
-    description: '',
+    title: '李宇博客',
+    description: '李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。',
     url: baseUrl,
-    siteName: '',
+    siteName: '李宇博客',
     locale: 'zh_CN',
     type: 'website',
+    images: [`${baseUrl}/og?title=${encodeURIComponent('李宇博客')}`],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '李宇博客',
+    description: '李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。',
+    images: [`${baseUrl}/og?title=${encodeURIComponent('李宇博客')}`],
   },
   robots: {
     index: true,
@@ -54,14 +65,14 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang="zh-CN"
       className={cx(
         'text-black bg-white dark:text-white dark:bg-black',
         GeistSans.variable,
         GeistMono.variable
       )}
     >
-      <body className="antialiased mx-auto mt-8 w-full max-w-[645px] px-4 sm:px-6 lg:px-8">
+      <body className="antialiased mx-auto mt-8 w-full max-w-[720px] px-4 sm:px-6 lg:px-8">
         <script
           dangerouslySetInnerHTML={{ __html: themeScript }}
           suppressHydrationWarning

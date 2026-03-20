@@ -22,14 +22,26 @@ export function generateMetadata({ params }) {
     publishedAt: publishedTime,
     summary: description,
     image,
+    tags,
   } = post.metadata
+  let normalizedTags = Array.isArray(tags)
+    ? tags
+    : tags
+      ? [String(tags)]
+      : undefined
   let ogImage = image
-    ? image
+    ? image.startsWith('http')
+      ? image
+      : `${baseUrl}${image}`
     : `${baseUrl}/og?title=${encodeURIComponent(title)}`
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `${baseUrl}/blog/${post.slug}`,
+    },
+    authors: [{ name: '李宇' }],
     openGraph: {
       title,
       description,
@@ -41,6 +53,7 @@ export function generateMetadata({ params }) {
           url: ogImage,
         },
       ],
+      tags: normalizedTags,
     },
     twitter: {
       card: 'summary_large_image',
@@ -58,6 +71,12 @@ export default function Blog({ params }) {
     notFound()
   }
 
+  const normalizedTags = Array.isArray(post.metadata.tags)
+    ? post.metadata.tags
+    : post.metadata.tags
+      ? [String(post.metadata.tags)]
+      : undefined
+
   return (
     <section>
       <script
@@ -72,12 +91,26 @@ export default function Blog({ params }) {
             dateModified: post.metadata.publishedAt,
             description: post.metadata.summary,
             image: post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+              ? post.metadata.image.startsWith('http')
+                ? post.metadata.image
+                : `${baseUrl}${post.metadata.image}`
+              : `${baseUrl}/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${baseUrl}/blog/${post.slug}`,
+            mainEntityOfPage: `${baseUrl}/blog/${post.slug}`,
+            wordCount: post.content.split(/\s+/).filter(Boolean).length,
+            articleSection: normalizedTags,
             author: {
               '@type': 'Person',
-              name: '',
+              name: '李宇',
+              url: baseUrl,
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: '李宇博客',
+              logo: {
+                '@type': 'ImageObject',
+                url: `${baseUrl}/og?title=${encodeURIComponent('李宇博客')}`,
+              },
             },
           }),
         }}

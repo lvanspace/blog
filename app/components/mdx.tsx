@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import React from 'react'
+import React, { type ComponentProps } from 'react'
 import CopyButton from './copy-button'
 import { codeToHtml } from 'shiki'
 
@@ -62,8 +62,29 @@ function CustomLink(props) {
   return <a target="_blank" rel="noopener noreferrer" {...props} />
 }
 
-function RoundedImage(props) {
-  return <Image alt={props.alt} width="600" height="0" className="rounded-lg mx-auto! my-8!" {...props} />
+function RoundedImage({
+  alt,
+  width,
+  height,
+  src,
+  ...rest
+}: ComponentProps<typeof Image>) {
+  const fallbackAlt: string =
+    alt ??
+    (typeof src === 'string'
+      ? src.split('/').pop()?.split('.')[0] ?? '博客配图'
+      : '博客配图')
+
+  return (
+    <Image
+      src={src}
+      alt={fallbackAlt}
+      width={width ?? 1200}
+      height={height ?? 675}
+      className="rounded-lg mx-auto! my-8!"
+      {...rest}
+    />
+  )
 }
 
 async function Pre({ children, ...props }) {

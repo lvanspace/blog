@@ -1,6 +1,17 @@
+import { Metadata } from "next";
 import { BlogPosts } from "app/components/posts";
+import { baseUrl } from "./sitemap";
 
-import Record from "./components/record";
+export const metadata: Metadata = {
+  title: "见字如面",
+  description: "李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。",
+  alternates: {
+    canonical: baseUrl,
+  },
+  openGraph: {
+    url: baseUrl,
+  },
+};
 
 export default function Page() {
   return (

@@ -4,6 +4,13 @@ import { getBlogPosts } from 'app/blog/utils'
 export async function GET() {
   let allBlogs = await getBlogPosts()
 
+  const latestDate = allBlogs.length
+    ? allBlogs
+        .map((post) => new Date(post.metadata.publishedAt))
+        .sort((a, b) => b.getTime() - a.getTime())[0]
+        .toUTCString()
+    : new Date().toUTCString()
+
   const itemsXml = allBlogs
     .sort((a, b) => {
       if (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)) {
@@ -20,6 +27,7 @@ export async function GET() {
           <pubDate>${new Date(
             post.metadata.publishedAt
           ).toUTCString()}</pubDate>
+          <guid isPermaLink="true">${baseUrl}/blog/${post.slug}</guid>
         </item>`
     )
     .join('\n')
@@ -29,7 +37,9 @@ export async function GET() {
     <channel>
         <title>李宇博客</title>
         <link>${baseUrl}</link>
-        <description>This is my portfolio RSS feed</description>
+        <description>李宇的个人博客 RSS，收录最新文章与笔记。</description>
+        <language>zh-CN</language>
+        <lastBuildDate>${latestDate}</lastBuildDate>
         ${itemsXml}
     </channel>
   </rss>`
