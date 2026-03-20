@@ -7,6 +7,9 @@ const navItems = {
   '/blog': {
     name: '笔记',
   },
+  '/resume': {
+    name: '简历',
+  },
 }
 
 export function Navbar() {
