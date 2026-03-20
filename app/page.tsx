@@ -22,7 +22,7 @@ export default function Page() {
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
         <LogoBoom />
       </h1>
-      <p className="mb-4">这里存放我的笔记、想法，一切我想分享的东西。</p>
+      <p className="mb-4" style={{ lineHeight: 2 }}>全栈开发工程师、科技爱好者。<br/>这里存放我的笔记、想法，一切我想分享的东西。<br/>联系方式:&nbsp;&nbsp;&nbsp;liyupeace@gmail.com</p>
       <div className="my-8">
         <div className="font-bold text-lg pb-4">📔 最近笔记</div>
         <BlogPosts />
