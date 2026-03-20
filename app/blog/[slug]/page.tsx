@@ -36,14 +36,14 @@ export function generateMetadata({ params }) {
     : `${baseUrl}/og?title=${encodeURIComponent(title)}`
 
   return {
-    title,
+    title: `${title} | 李宇Blog`,
     description,
     alternates: {
       canonical: `${baseUrl}/blog/${post.slug}`,
     },
     authors: [{ name: '李宇' }],
     openGraph: {
-      title,
+      title: `${title} | 李宇Blog`,
       description,
       type: 'article',
       publishedTime,
@@ -106,10 +106,10 @@ export default function Blog({ params }) {
             },
             publisher: {
               '@type': 'Organization',
-              name: '李宇博客',
+              name: '李宇Blog',
               logo: {
                 '@type': 'ImageObject',
-                url: `${baseUrl}/og?title=${encodeURIComponent('李宇博客')}`,
+                url: `${baseUrl}/og?title=${encodeURIComponent('李宇Blog')}`,
               },
             },
           }),

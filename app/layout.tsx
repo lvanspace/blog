@@ -11,28 +11,34 @@ import { baseUrl } from './sitemap'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '李宇博客',
-    template: '%s | 李宇博客',
+    default: '李宇Blog',
+    template: '%s | 李宇Blog',
   },
   description: '李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', rel: 'shortcut icon', type: 'image/svg+xml' },
+    ],
+  },
   alternates: {
     canonical: baseUrl,
   },
   authors: [{ name: '李宇' }],
   openGraph: {
-    title: '李宇博客',
+    title: '李宇Blog',
     description: '李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。',
     url: baseUrl,
-    siteName: '李宇博客',
+    siteName: '李宇Blog',
     locale: 'zh_CN',
     type: 'website',
-    images: [`${baseUrl}/og?title=${encodeURIComponent('李宇博客')}`],
+    images: [`${baseUrl}/og?title=${encodeURIComponent('李宇Blog')}`],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '李宇博客',
+    title: '李宇Blog',
     description: '李宇的个人博客，记录产品、技术、摄影与生活的笔记与想法。',
-    images: [`${baseUrl}/og?title=${encodeURIComponent('李宇博客')}`],
+    images: [`${baseUrl}/og?title=${encodeURIComponent('李宇Blog')}`],
   },
   robots: {
     index: true,

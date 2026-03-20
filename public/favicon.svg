@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+  <polygon points="32,4 60,32 32,60 4,32" fill="#5BC0FF">
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      from="0 32 32"
+      to="360 32 32"
+      dur="4s"
+      repeatCount="indefinite"
+    />
+  </polygon>
+</svg>
