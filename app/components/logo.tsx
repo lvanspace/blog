@@ -44,7 +44,7 @@ export function LogoBoom() {
           height={28}
           className="shrink-0"
         />
-        <span>李宇Blog · 见字如面</span>
+        <span>见字如面&nbsp;，&nbsp;&nbsp;&nbsp;李宇 Blog。</span>
       </span>
 
       {boom.show && (
